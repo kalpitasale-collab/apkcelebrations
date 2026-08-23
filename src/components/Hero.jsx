@@ -38,8 +38,8 @@ export default function Hero() {
 
           {/* Main Heading */}
           <h1 className="hero-title animate-fade-up" style={{ animationDelay: '0.2s' }}>
-            Turning Moments<br />
-            Into <span className="hero-title-italic">Memories</span>
+            Crafting Unforgettable<br />
+            <span className="hero-title-italic">Celebrations</span>
           </h1>
 
           {/* Tagline / Brand Subtitle */}

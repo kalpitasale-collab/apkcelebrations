@@ -3,19 +3,12 @@ import { GALLERY_DATA } from '../data/gallery';
 import { X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 
 export default function Gallery() {
-  const [activeFilter, setActiveFilter] = useState('All');
-  const [filteredImages, setFilteredImages] = useState(GALLERY_DATA);
+  const filteredImages = GALLERY_DATA;
   const [selectedImage, setSelectedImage] = useState(null); // stores the currently selected image object
 
-  const filters = ['All', 'Birthdays', 'Balloon Decor', 'Theme Parties', 'Private Events'];
+  
 
-  useEffect(() => {
-    if (activeFilter === 'All') {
-      setFilteredImages(GALLERY_DATA);
-    } else {
-      setFilteredImages(GALLERY_DATA.filter(img => img.category === activeFilter));
-    }
-  }, [activeFilter]);
+ 
 
   const handleNext = () => {
     const currentIndex = filteredImages.findIndex(img => img.id === selectedImage.id);
@@ -64,22 +57,7 @@ export default function Gallery() {
           </p>
         </div>
 
-        {/* Filter Buttons */}
-        <div className="gallery-filters">
-          {filters.map((filter) => (
-            <button
-              key={filter}
-              className={`filter-tab ${activeFilter === filter ? 'active' : ''}`}
-              onClick={() => {
-                setActiveFilter(filter);
-                setSelectedImage(null); // Reset lightbox to prevent index errors
-              }}
-            >
-              {filter}
-            </button>
-          ))}
-        </div>
-
+    
         {/* Grid Layout Container */}
         <div className="gallery-grid">
           {filteredImages.map((image) => (

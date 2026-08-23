@@ -33,7 +33,7 @@ export default function Contact() {
                 <div className="contact-phones">
                   {CONTACT_INFO.phones.map((phone, idx) => (
                     <a key={idx} href={`tel:${phone.value}`} className="contact-info-text" style={{ display: 'block', fontWeight: '500' }}>
-                      {phone.display} {idx === 0 && <span style={{ fontSize: '10px', color: 'var(--accent-color)' }}>(Primary)</span>}
+                      {phone.display} {idx === 0 && <span style={{ fontSize: '10px', color: 'var(--accent-color)' }}></span>}
                     </a>
                   ))}
                 </div>
@@ -90,13 +90,6 @@ export default function Contact() {
               <MessageSquare size={14} style={{ marginRight: '6px' }} /> WhatsApp Us
             </a>
 
-            {/* Email mailto */}
-            <a
-              href={`mailto:${CONTACT_INFO.email}`}
-              className="btn btn-secondary contact-action-btn"
-            >
-              <Mail size={14} style={{ marginRight: '6px' }} /> Email Us Directly
-            </a>
           </div>
 
         </div>

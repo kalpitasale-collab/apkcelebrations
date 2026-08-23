@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, MapPin, User, Phone, Mail, Users, CheckCircle } from 'lucide-react';
-import { CONTACT_INFO } from '../constants/config';
+
 import emailjs from '@emailjs/browser';
 
 export default function BookingForm({ onOpenSuccessModal }) {
@@ -91,72 +91,59 @@ export default function BookingForm({ onOpenSuccessModal }) {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validate()) {
-      // Build a readable message for WhatsApp
-      const message = `*New Event Booking Enquiry*
-
-*Name:* ${formData.name}
-*Phone:* ${formData.phone}
-${formData.email ? `*Email:* ${formData.email}\n` : ''}*Event Type:* ${formData.eventType}
-*Event Date:* ${formData.eventDate}
-*Location:* ${formData.location}
-${formData.guests ? `*Guests:* ${formData.guests}\n` : ''}${formData.services.length > 0 ? `*Services:* ${formData.services.join(', ')}\n` : ''}${formData.notes ? `*Notes:* ${formData.notes}` : ''}`;
-
-      const whatsappUrl = `https://wa.me/91${CONTACT_INFO.whatsapp.phone}?text=${encodeURIComponent(message)}`;
-      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-
-      // Send email via EmailJS as a backup record
-      emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        {
-          from_name: formData.name,
-          phone: formData.phone,
-          email: formData.email || 'Not provided',
-          event_type: formData.eventType,
-          event_date: formData.eventDate,
-          location: formData.location,
-          guests: formData.guests || 'Not specified',
-          services: formData.services.join(', ') || 'None selected',
-          notes: formData.notes || 'None'
-        },
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-      )
-        .then(() => {
-          console.log('Booking email sent successfully');
-        })
-        .catch((err) => {
-          console.error('EmailJS send failed:', err);
-        });
-
-      // Reset form
-      setFormData({
-        name: '',
-        phone: '',
-        email: '',
-        eventType: '',
-        services: [],
-        eventDate: '',
-        location: '',
-        guests: '',
-        notes: ''
+  e.preventDefault();
+  if (validate()) {
+    // Send email via EmailJS
+    emailjs.send(
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      {
+        from_name: formData.name,
+        phone: formData.phone,
+        email: formData.email || 'Not provided',
+        event_type: formData.eventType,
+        event_date: formData.eventDate,
+        location: formData.location,
+        guests: formData.guests || 'Not specified',
+        services: formData.services.join(', ') || 'None selected',
+        notes: formData.notes || 'None'
+      },
+      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+    )
+      .then(() => {
+        console.log('Booking email sent successfully');
+      })
+      .catch((err) => {
+        console.error('EmailJS send failed:', err);
       });
-      setErrors({});
 
-      // Open success modal in parent
-      onOpenSuccessModal();
-    } else {
-      const firstError = Object.keys(errors)[0];
-      if (firstError) {
-        const errorInput = document.getElementsByName(firstError)[0];
-        if (errorInput) {
-          errorInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          errorInput.focus();
-        }
+    // Reset form
+    setFormData({
+      name: '',
+      phone: '',
+      email: '',
+      eventType: '',
+      services: [],
+      eventDate: '',
+      location: '',
+      guests: '',
+      notes: ''
+    });
+    setErrors({});
+
+    // Open success modal in parent
+    onOpenSuccessModal();
+  } else {
+    const firstError = Object.keys(errors)[0];
+    if (firstError) {
+      const errorInput = document.getElementsByName(firstError)[0];
+      if (errorInput) {
+        errorInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        errorInput.focus();
       }
     }
-  };
+  }
+};
 
   return (
     <section id="booking" className="section booking-sec">

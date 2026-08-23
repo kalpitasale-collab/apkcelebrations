@@ -21,7 +21,7 @@ export default function Services() {
   return (
     <section id="services" className="section" style={{ backgroundColor: 'var(--background-color)' }}>
       <div className="container">
-        
+
         {/* Section Header */}
         <div className="section-header">
           <span className="eyebrow">What We Do</span>
@@ -40,16 +40,16 @@ export default function Services() {
               </div>
               <h3 className="service-title">{service.title}</h3>
               <p className="service-desc">{service.description}</p>
-              
-              <div style={{ 
-                marginTop: 'var(--spacing-md)', 
-                fontSize: '0.75rem', 
-                color: 'var(--accent-color)', 
+
+              <div style={{
+                marginTop: 'var(--spacing-md)',
+                fontSize: '0.75rem',
+                color: 'var(--accent-color)',
                 fontWeight: '600',
                 letterSpacing: '1px',
                 textTransform: 'uppercase'
               }}>
-                Learn More
+
               </div>
             </div>
           ))}
